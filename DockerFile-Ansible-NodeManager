@@ -1,0 +1,15 @@
+FROM ubuntu:latest
+
+# Install Tools
+RUN apt update -y \
+ && apt install openssh-client sshpass iproute2 iputils-ping ufw tree vim-tiny -y
+
+# Install Ansible
+RUN apt install software-properties-common -y \
+ && add-apt-repository --yes --update ppa:ansible/ansible \
+ && apt install ansible python3-paramiko -y
+
+# Set PS1 env
+RUN echo 'export "PS1=\e[1;32m\u\e[0m@\e[0;36m\h\e[0m:\e[1;34m\w\e[0m# \e[0m"' >> /root/.bashrc
+
+

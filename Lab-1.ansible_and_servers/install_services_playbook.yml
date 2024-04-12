@@ -1,0 +1,80 @@
+---
+- name: "Install WEB Service"
+
+  hosts: web_servers
+  become: yes
+  vars:
+    php_install: False
+
+  handlers:
+    - name: restart apache
+      # Uncomment following lines if you don't use Docker Container'
+      #service:
+      #  name: "apache2"
+      #  state: "restarted"
+
+      # use this syntax with container because systemd isn't available
+      raw: "/etc/init.d/apache2 restart"
+      listen: "restart web service"
+
+  tasks:
+    - name: "Install Apache2 service"
+      apt:
+        name: apache2
+        state: present
+      register: status
+
+    - name: "Enable PHP install"
+      set_fact:
+        php_install: yes
+      when: status.changed
+
+    - name: "Install PHP and modules"
+      apt:
+        name: "libapache2-mod-php,php,php-curl"
+        state: present
+      notify: "restart web service"
+      when: php_install|default(False)
+
+- name: "Install NTP service"
+
+  hosts: ntp_servers
+  become: yes
+
+  tasks:
+
+    - name: "Install ntp service"
+      apt:
+        name: ntp
+        state: present
+
+    - name: "Enable/Start ntp service"
+      # uncomment following lines if using systemd "raw line"
+      #service:
+      #  name: ntp
+      #  state: started
+      #  enable: yes
+      raw: /etc/init.d/ntp start
+
+- name: "Install DataBase service"
+
+  hosts: db_servers
+  become: yes
+
+  tasks:
+
+    - name: "Install {{ db_name }} service"
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+        name: "{{ db_name }}"
+        state: present
+
+    - name: "Enable/Start {{ db_name }} service"
+      # uncomment following lines if using systemd and comment "raw line"
+      #service:
+      #  name: mariadb
+      #  state: started
+      #  enable: yes
+      raw: "/etc/init.d/{{ db_name }} start"
+      
