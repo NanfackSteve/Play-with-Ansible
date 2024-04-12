@@ -67,7 +67,7 @@
       apt:
         update_cache: yes
         cache_valid_time: 3600
-        name: "{{ db_name }}"
+        name: "{{ db_name }}-server, {{ db_name }}-client"
         state: present
 
     - name: "Enable/Start {{ db_name }} service"
