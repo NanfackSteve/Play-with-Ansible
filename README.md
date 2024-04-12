@@ -3,4 +3,4 @@
 
 <h4>Let's play with Ansible and Docker in GNS3</h4>
 
-<img src=".img/Ansible_GNS3.avif" alt="Ansible_&_GNS3" height="160" width="380" />
+<img src=".img/Ansible_GNS3.avif" alt="Ansible_&_GNS3" height="160" width="340" />
