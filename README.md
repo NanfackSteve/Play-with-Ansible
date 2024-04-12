@@ -1,2 +1,3 @@
-# play-with-ansible
-Let's play with Ansible Docker and GNS3
+# Play with Ansible
+
+Let's play with Ansible Docker in GNS3
