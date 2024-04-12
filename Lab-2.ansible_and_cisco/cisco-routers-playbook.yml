@@ -1,0 +1,22 @@
+---
+- name: Change router hostname
+  hosts: cisco
+  gather_facts: no
+  vars:
+    new_hostname: "router"
+
+  tasks:
+    - name: Check Ping
+      ios_ping:
+        dest: 192.168.0.1
+
+    - name: Configure hostname
+      ios_config:
+        lines:
+          - "hostname {{ new_hostname }}"
+      register: result
+
+    - name: Afficher le résultat
+      debug:
+        var: result
+
