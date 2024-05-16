@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt update -y \
-&& apt install openssh-server iproute2 iputils-ping ufw openssl vim-tiny tree sudo python3.10-minimal python3-apt -y
+&& apt install openssh-server iproute2 iputils-ping ufw openssl vim-tiny tree sudo python3-minimal python3-apt -y
 
 RUN echo 'export "PS1=\e[1;32m\u\e[0m@\e[0;36m\h\e[0m:\e[1;34m\w\e[0m# \e[0m"' >> /root/.bashrc
 
